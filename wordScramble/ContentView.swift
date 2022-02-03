@@ -26,21 +26,27 @@ struct ContentView: View {
             List{
                 Section{
                     TextField("Enter your word", text: $newWord, onCommit: addNewWord)
+                        //text save in $newWord
+                        // on enter/commit go to function addNewWord
                         .autocapitalization(.none)
                 }
                 
                 Section{
+                    // section for words typed list
+                    // loops thru usedWords array
                     ForEach(usedWords, id: \.self){
                         word in
                         HStack{
                             Image(systemName: "\(word.count).circle")
-                            //“x.circle.fill” – so 1.circle.fill, 20.circle.fill
+                            // icon before word
                             Text(word)
                         }
                         
                     }
                 }
-            }
+            } // end of List
+            
+            //at the end, write navigation view add ons
             .navigationTitle(rootWord)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing){
@@ -55,7 +61,7 @@ struct ContentView: View {
 
             }
             
-        }
+        } //end of nav view
         
         // on load of App
         .onAppear(perform: startGame)
@@ -68,6 +74,7 @@ struct ContentView: View {
     }
     
     func startGame(){
+        // reset
         Score = 0
         usedWords.removeAll()
         
@@ -78,7 +85,7 @@ struct ContentView: View {
                     // 3. Split the string up into an array of strings, splitting on line breaks
                     let allWords = startWords.components(separatedBy: "\n")
 
-                    // 4. Pick one random word, or use "silkworm" as a sensible default
+                    // 4. Pick one random word, or use "word" as a sensible default
                     rootWord = allWords.randomElement() ?? "word"
 
                     // If we are here everything has worked, so we can exit
@@ -88,6 +95,9 @@ struct ContentView: View {
 
             // else if start.txt is not found
             fatalError("Could not load start.txt from bundle.")
+        
+        //notes
+        // we use if let variable = try? so we can make a variable even if it does not exist.
     }
 
     func addNewWord(){
@@ -129,6 +139,9 @@ struct ContentView: View {
         
         newWord = ""
         
+        
+        
+        //note: guard when true goes in function
     }
     
     // --- Word Checker Methods --- //
